@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SwfHtmlMaker": {
+      "commandName": "Project",
+      "commandLineArgs": "-Rv --ignore { bin binary } \"E:\\Personal Files\\Documents\\NSFW\\Games\""
+    }
+  }
+}

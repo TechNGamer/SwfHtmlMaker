@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwfHtmlMaker", "SwfHtmlMaker\SwfHtmlMaker.csproj", "{114BBD54-8383-45C9-910A-7096338126C6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "Helper\Utility.csproj", "{CA5184A2-0D12-47E1-8F07-B8976362B97B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject", "UnitTestProject\UnitTestProject.csproj", "{EAC6517C-C80C-4F20-9216-D8AD24E3D166}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,13 @@ Global
 		{114BBD54-8383-45C9-910A-7096338126C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{114BBD54-8383-45C9-910A-7096338126C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{114BBD54-8383-45C9-910A-7096338126C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA5184A2-0D12-47E1-8F07-B8976362B97B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA5184A2-0D12-47E1-8F07-B8976362B97B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA5184A2-0D12-47E1-8F07-B8976362B97B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA5184A2-0D12-47E1-8F07-B8976362B97B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAC6517C-C80C-4F20-9216-D8AD24E3D166}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAC6517C-C80C-4F20-9216-D8AD24E3D166}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAC6517C-C80C-4F20-9216-D8AD24E3D166}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

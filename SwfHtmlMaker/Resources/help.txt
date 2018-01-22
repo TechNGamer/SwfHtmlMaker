@@ -1,0 +1,9 @@
+﻿Usage:
+	SwfHtmlMaker [options] File/Directory
+
+-h,     --help: Brings up the list of commands and their descriptions.
+-r, -R, --recursive: Goes through all the files and folders looking for .swf and running -s on them all. Note: Must come at the end and will ignore every other command.
+-v,     --verbose: Prints the action it is currently doing.
+        --ignore: A list of names to ignore. Use the wildcard (*) for more general ignorance. (Case insensitive.)
+
+SwfHtmlMaker by Tech N Gamer. Visit the GitHub page: [TODO: Impliment Github URL.]

@@ -1,0 +1,15 @@
+﻿<!--
+This is a generated basic html file made from SWF HTML Maker.
+SWF HTML Maker is a free and open source program to enable the use of SWF files offline in web browsers such as Chrome.
+You are not allowed to sell the software in any ways. Doing so is against the agreement.
+-->
+<html>
+	<head>
+		<title>[parentFolder]</title>
+	</head>
+	<body>
+		<object>
+			<embed src="[file]" width="100%" height="100%"></embed>
+		</object>
+	</body>
+</html>
