@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace Utility.FS {
 	public static class FSSpider {
-		public static List<string> GetAllSubs( string path, string[] ignoreList, bool verbose = false, string extLookFor = "*" ) {
+		public static List<string> GetAllSubFiles( string path, string[] ignoreList, bool verbose = false, string extLookFor = "*" ) {
 			List<string> files = new List<string>();
 			foreach(FileSystemInfo fsObject in new DirectoryInfo( path ).EnumerateFileSystemInfos() ) {
 				bool skip = false;
@@ -40,7 +40,7 @@ namespace Utility.FS {
 								Debug.WriteLine( $"Looking into sub directory '{fsObject.FullName}'." );
 								#endif
 							}
-							files.AddRange( GetAllSubs( fsObject.FullName, ignoreList, verbose, extLookFor ) );
+							files.AddRange( GetAllSubFiles( fsObject.FullName, ignoreList, verbose, extLookFor ) );
 						} catch (Exception e) {
 							if ( verbose ) {
 								Console.WriteLine( $"An error occuered: {e.Message}" );

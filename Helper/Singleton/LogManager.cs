@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using Utility.Loggers;
+
+#if DEBUG
+
+#endif
 
 namespace Utility.Singleton {
 
@@ -174,6 +179,10 @@ namespace Utility.Singleton {
 		public void WriteToLog( string message, LogLevel errorLevel ) {
 			//Message is reasigned to a new string that has the time and message.
 			message = $"{DateTime.Now.ToLocalTime().ToString()}: {message}";
+			#if DEBUG
+			string errorLevelName = Enum.GetName( typeof( LogLevel ), errorLevel );
+			Debug.WriteLine( $"Adding message; '{message}' to {errorLevel} queue to be written to a {errorLevelName}.log." );
+			#endif
 			//Checks to see what error level it is and to enqueue it into that file.
 			if ( errorLevel == LogLevel.LowLevelError ) {
 				//Locks that queue from being used.

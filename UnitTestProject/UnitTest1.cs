@@ -10,7 +10,7 @@ namespace UnitTestProject {
 		[TestMethod]
 		public void FSSpiderTester() {
 
-			FSSpider.GetAllSubs( new DirectoryInfo( Environment.CurrentDirectory ).Root.FullName, new string[] { } );
+			FSSpider.GetAllSubFiles( new DirectoryInfo( Environment.CurrentDirectory ).Root.FullName, new string[] { } );
 		}
 	}
 }
