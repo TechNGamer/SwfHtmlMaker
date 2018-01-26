@@ -79,17 +79,7 @@ namespace Utility.Singleton {
 				//Creates a varable called i and set's it to 0.
 				int i = 0;
 				//Checks to see if any of the flags are set, and if none of them are, set the waiting flag and wait until one of the flags become active. Otherwise, continue to the writing part.
-				if ( hasNewNormalItem.WaitOne( 0 ) ) {
-					i = 0;
-				} else if ( hasNewLowLevelItem.WaitOne( 0 ) ) {
-					i = 1;
-				} else if ( hasNewCriticalItem.WaitOne( 0 ) ) {
-					i = 2;
-				} else {
-					waiting.Set();
-
-					i = WaitHandle.WaitAny( new WaitHandle[] { hasNewNormalItem, hasNewLowLevelItem, hasNewCriticalItem, terminate } );
-				}
+				i = WaitHandle.WaitAny( new WaitHandle[] { hasNewNormalItem, hasNewLowLevelItem, hasNewCriticalItem, terminate } );
 				//Looks to see what value i is and to write to the corrosponding log.
 				switch ( i ) {
 					case 0:
@@ -120,7 +110,7 @@ namespace Utility.Singleton {
 			}
 
 			foreach ( string logMessage in queueCopy ) {
-				byte[] info = new UTF8Encoding( true ).GetBytes( $"{logMessage}\n".ToCharArray() );
+				byte[] info = new UTF8Encoding( true ).GetBytes( $"{logMessage}".ToCharArray() );
 
 				criticalLogFile.Write( info, 0, info.Length );
 				criticalLogFile.Flush();
@@ -140,7 +130,7 @@ namespace Utility.Singleton {
 			}
 
 			foreach ( string logMessage in queueCopy ) {
-				byte[] info = new UTF8Encoding( true ).GetBytes( $"{logMessage}\n".ToCharArray() );
+				byte[] info = new UTF8Encoding( true ).GetBytes( $"{logMessage}".ToCharArray() );
 
 				lowLevelLogFile.Write( info, 0, info.Length );
 				lowLevelLogFile.Flush();
@@ -160,7 +150,7 @@ namespace Utility.Singleton {
 			}
 
 			foreach ( string logMessage in queueCopy ) {
-				byte[] info = new UTF8Encoding( true ).GetBytes( $"{logMessage}\n".ToCharArray() );
+				byte[] info = new UTF8Encoding( true ).GetBytes( $"{logMessage}".ToCharArray() );
 
 				normalLogFile.Write( info, 0, info.Length );
 				normalLogFile.Flush();
@@ -208,6 +198,10 @@ namespace Utility.Singleton {
 
 				hasNewCriticalItem.Set();
 			}
+		}
+
+		public void FlushQueues() {
+			terminate.Set();
 		}
 	}
 }
