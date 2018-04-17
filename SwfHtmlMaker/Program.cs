@@ -59,7 +59,7 @@ namespace SwfHtmlMaker {
 				} else if ( args[ i ].StartsWith( "-" ) ) { // Checks to see if it's a char argument.
 					char[] charArgs = args[ i ].Substring( 1 ).ToCharArray(); // This is to get the individual charectors for analizing.
 
-					foreach ( char @char in charArgs ) {
+					foreach ( char @char in charArgs ) { // Itterates through the chars of the - arguments.
 						switch ( @char ) {
 							case 'h':
 								ThrowHelp();
@@ -79,21 +79,18 @@ namespace SwfHtmlMaker {
 				}
 			}
 
-			classLogger = new Logger( "Program.cs", verbose );
+			classLogger = new Logger( "Program.cs", verbose ); // Creates the logger object for outputing to the log and, if vebose is true, to the console.
 
 			if ( ignoreNames == null ) {
-				classLogger.WriteLineToLog( "ignore option not used, creating empty ignore list." );
-
+				// Writes out to the log for a new line.
+				classLogger.WriteLineToLog( "--ignore option not used, creating empty ignore list." );
+				// Creates an empty ignore list.
 				ignoreNames = new List<string>();
 			}
-
+			// States where the master.html will be placed.
 			classLogger.WriteLineToLog( $"Creating a master html file at '{args[ args.Length - 1 ]}'" );
 
-			if ( recursive ) {
-				masterHTML = new FileInfo( Path.Combine( args[ args.Length - 1 ], "Master.html" ) );
-			} else {
-				masterHTML = new FileInfo( args[ args.Length - 1 ] );
-			}
+			masterHTML = new FileInfo( Path.Combine( args[ args.Length - 1 ], "Master.html" ) ); // Creates a master.html file using the last arg.
 
 			classLogger.WriteLineToLog( $"Checking variables:\n\tPath: {args[ args.Length - 1 ]}\n\tRecursive: {recursive}\n\tVerbose: {verbose}\n\tMasterHTML: {masterHTML.FullName}" );
 
