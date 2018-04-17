@@ -79,6 +79,10 @@ namespace SwfHtmlMaker {
 				}
 			}
 
+			if(args[0] == "-h" ) {
+				ThrowHelp();
+			}
+
 			classLogger = new Logger( "Program.cs", verbose ); // Creates the logger object for outputing to the log and, if vebose is true, to the console.
 
 			if ( ignoreNames == null ) {
@@ -245,9 +249,7 @@ namespace SwfHtmlMaker {
 		 */
 		static void ThrowHelp( bool wrongOrInvalidArg = false ) {
 			Console.WriteLine( File.ReadAllText( Path.Combine( Environment.CurrentDirectory, "Resources", "help.txt" ) ) ); // Opens the help.txt file for reading, outputs it, then closes the file.
-
 			
-
 			if ( wrongOrInvalidArg ) {
 				Environment.ExitCode = -1; // -1 indicates that the program has exited, but an argument was wrong.
 			} else {
@@ -260,7 +262,9 @@ namespace SwfHtmlMaker {
 		}
 
 		private static EventHandler OnClose() {
-			classLogger.Flush();
+			try {
+				classLogger.Flush();
+			} catch { }
 
 			if ( verbose ) {
 				Console.WriteLine( $"Log files can be found at {classLogger.LogLocation}." );
