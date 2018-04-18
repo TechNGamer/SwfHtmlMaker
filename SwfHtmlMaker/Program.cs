@@ -2,10 +2,10 @@
 using System.Globalization;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 
 using Utility.Loggers;
 using Utility.FS;
-using System.Threading;
 
 namespace SwfHtmlMaker {
 	static class Program {
