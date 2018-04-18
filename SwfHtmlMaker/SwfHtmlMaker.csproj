@@ -4,7 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <StartupObject>SwfHtmlMaker.Program</StartupObject>
-		<RuntimeIdentifiers>win10-x64;osx.10.11-x64;linux-x64</RuntimeIdentifiers>
+		<RuntimeIdentifiers>win-x64;osx.10.11-x64;linux-x64</RuntimeIdentifiers>
 		<Company />
 		<Product>SWF HTML Maker</Product>
 		<Description>This program was made to have offline SWF files loaded and run inside a web browser.</Description>
@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Utility\Utility.csproj" />
+    <Content Include="Resources\**" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

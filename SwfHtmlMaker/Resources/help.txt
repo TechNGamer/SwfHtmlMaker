@@ -6,4 +6,4 @@
 -v,     --verbose: Prints the action it is currently doing.
         --ignore: A list of names to ignore. Use the wildcard (*) for more general ignorance. (Case insensitive.)
 
-SwfHtmlMaker by Tech N Gamer. Visit the GitHub page: [TODO: Impliment Github URL.]
+SwfHtmlMaker by Tech N Gamer. Visit the GitHub page: https://github.com/TechNGamer/SwfHtmlMaker

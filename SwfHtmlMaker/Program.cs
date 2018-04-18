@@ -8,7 +8,7 @@ using Utility.Loggers;
 using Utility.FS;
 
 namespace SwfHtmlMaker {
-	static class Program {
+	public static class Program {
 
 		static bool recursive, verbose; // Verbose prints all relevent information on what it's doing out. Recursive looks into sub directories.
 		static FileInfo masterHTML; // masterHTML is the file that is at the psudo root.
@@ -16,6 +16,9 @@ namespace SwfHtmlMaker {
 		static Logger classLogger;
 
 		static void Main( string[] args ) {
+
+			AppDomain.CurrentDomain.ProcessExit += OnClose();
+
 			// Checks to see if there are any args.
 			if ( args == null || args.Length == 0 ) {
 				ThrowHelp( true );
@@ -56,7 +59,7 @@ namespace SwfHtmlMaker {
 				} else if ( args[ i ].StartsWith( "-" ) ) { // Checks to see if it's a char argument.
 					char[] charArgs = args[ i ].Substring( 1 ).ToCharArray(); // This is to get the individual charectors for analizing.
 
-					foreach ( char @char in charArgs ) {
+					foreach ( char @char in charArgs ) { // Itterates through the chars of the - arguments.
 						switch ( @char ) {
 							case 'h':
 								ThrowHelp();
@@ -76,26 +79,28 @@ namespace SwfHtmlMaker {
 				}
 			}
 
-			classLogger = new Logger( "Program.cs", verbose );
+			if(args[0] == "-h" ) {
+				ThrowHelp();
+			}
 
-			if (ignoreNames == null ) {
-				classLogger.WriteLineToLog( "ignore option not used, creating empty ignore list." );
+			classLogger = new Logger( "Program.cs", verbose ); // Creates the logger object for outputing to the log and, if vebose is true, to the console.
 
+			if ( ignoreNames == null ) {
+				// Writes out to the log for a new line.
+				classLogger.WriteLineToLog( "--ignore option not used, creating empty ignore list." );
+				// Creates an empty ignore list.
 				ignoreNames = new List<string>();
 			}
-
+			// States where the master.html will be placed.
 			classLogger.WriteLineToLog( $"Creating a master html file at '{args[ args.Length - 1 ]}'" );
 
-			if ( recursive ) {
-				masterHTML = new FileInfo( Path.Combine( args[ args.Length - 1 ], "Master.html" ) );
-			} else {
-				masterHTML = new FileInfo( args[ args.Length - 1 ] );
-			}
+			masterHTML = new FileInfo( Path.Combine( args[ args.Length - 1 ], "Master.html" ) ); // Creates a master.html file using the last arg.
 
 			classLogger.WriteLineToLog( $"Checking variables:\n\tPath: {args[ args.Length - 1 ]}\n\tRecursive: {recursive}\n\tVerbose: {verbose}\n\tMasterHTML: {masterHTML.FullName}" );
 
 			BeginCreation();
 		}
+
 		/*
 		 * <summary>
 		 * This method starts the whole sha-bang off.
@@ -106,7 +111,12 @@ namespace SwfHtmlMaker {
 			List<string> swfFiles;
 
 			classLogger.WriteLineToLog( $"Getting all subfiles from '{masterHTML.DirectoryName}'" );
-			
+
+			if ( verbose ) {
+				Console.Write( "Sleeping for 15 seconds before proceeding forward." );
+				Thread.Sleep( 15000 );
+			}
+
 			swfFiles = FSSpider.GetAllSubFiles( masterHTML.Directory.FullName, ignoreNames.ToArray(), verbose, ".swf" );
 
 			masterHTMLWriter = masterHTML.CreateText();
@@ -133,10 +143,6 @@ namespace SwfHtmlMaker {
 
 			Thread.Sleep( 250 );
 		}
-		// TODO: Create a Sanatize method.
-		//static void SanatizeLocation() {
-
-		//}
 
 		static void CreateMasterHTMLForAll( StreamWriter mainHTML, string[] swfPaths ) {
 			List<string> htmlPaths = new List<string>();
@@ -150,7 +156,7 @@ namespace SwfHtmlMaker {
 
 				StreamWriter miniHTML = File.CreateText( htmlPaths[ i ] );
 
-				classLogger.WriteLineToLog( $"Creating html file at '{htmlPaths[i]}'." );
+				classLogger.WriteLineToLog( $"Creating html file at '{htmlPaths[ i ]}'." );
 
 				CreateMasterHTMLForOne( miniHTML, swfPaths[ i ] );
 
@@ -243,7 +249,7 @@ namespace SwfHtmlMaker {
 		 */
 		static void ThrowHelp( bool wrongOrInvalidArg = false ) {
 			Console.WriteLine( File.ReadAllText( Path.Combine( Environment.CurrentDirectory, "Resources", "help.txt" ) ) ); // Opens the help.txt file for reading, outputs it, then closes the file.
-
+			
 			if ( wrongOrInvalidArg ) {
 				Environment.ExitCode = -1; // -1 indicates that the program has exited, but an argument was wrong.
 			} else {
@@ -253,6 +259,18 @@ namespace SwfHtmlMaker {
 			Console.WriteLine( $"\nExit code: {Environment.ExitCode}\n\nPlease go to the GitHub page to learn what each exit code means." );
 
 			Environment.Exit( Environment.ExitCode );
+		}
+
+		private static EventHandler OnClose() {
+			try {
+				classLogger.Flush();
+			} catch { }
+
+			if ( verbose ) {
+				Console.WriteLine( $"Log files can be found at {classLogger.LogLocation}." );
+			}
+
+			return null;
 		}
 	}
 }

@@ -11,24 +11,22 @@ namespace Utility.Loggers {
 
 	public class Logger {
 
-		public string ScriptName {
-			get {
-				return scriptName;
-			}
-		}
+		public string ScriptName { get; }
 
 		public string LogLocation {
 			get => LogManager.LogHome;
 		}
 
-		private string scriptName;
-		private bool verbose;
+		public bool Verbose {
+			get;
+			set;
+		}
 
 		private LogManager logManager;
 
 		public Logger( string scriptName, bool verbose = false ) {
-			this.scriptName = scriptName;
-			this.verbose = verbose;
+			ScriptName = scriptName;
+			Verbose = verbose;
 
 			logManager = LogManager.Instence;
 		}
@@ -42,11 +40,11 @@ namespace Utility.Loggers {
 		public void WriteToLog( string message, LogLevel errorLevel = LogLevel.Normal ) {
 			logManager.WriteToLog( $"{ScriptName}: {message}", errorLevel );
 
-			if ( verbose ) {
-				Console.WriteLine( message );
+			if ( Verbose ) {
+				Console.Write( message );
 
 #if DEBUG
-				Debug.WriteLine(message);
+				Debug.Write( message );
 #endif
 			}
 		}
@@ -97,6 +95,10 @@ namespace Utility.Loggers {
 
 		public void WriteToLog( decimal message, LogLevel errorLevel = LogLevel.Normal ) {
 			WriteToLog( $"{message}", errorLevel );
+		}
+
+		public void WriteToLog( object message, LogLevel errorLevel = LogLevel.Normal ) {
+			WriteToLog( message.ToString(), errorLevel );
 		}
 
 		public void WriteLineToLog( string message, LogLevel errorLevel = LogLevel.Normal ) {
@@ -150,7 +152,11 @@ namespace Utility.Loggers {
 		public void WriteLineToLog( decimal message, LogLevel errorLevel = LogLevel.Normal ) {
 			WriteToLog( $"{message}\n", errorLevel );
 		}
-		
-#endregion
+
+		public void WriteLineToLog( object message, LogLevel errorLevel = LogLevel.Normal ) {
+			WriteToLog( $"{message}\n", errorLevel );
+		}
+
+		#endregion
 	}
 }
